@@ -1,0 +1,838 @@
+{
+  "name": "Email_JD_Part2",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        -192
+      ],
+      "id": "612f19fc-bcb0-4f82-9dd3-1c1674bf494d",
+      "name": "Telegram Trigger",
+      "webhookId": "a235a3e4-aa38-4d74-b39a-0c1b17842508",
+      "credentials": {
+        "telegramApi": {
+          "id": "YuDw1EqfAdNyQU2J",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "1744563539",
+        "text": "={{ $('Edit Fields2').item.json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2288,
+        -208
+      ],
+      "id": "1e1b6b77-3984-4577-b6eb-7c3be8484966",
+      "name": "Send a text message",
+      "webhookId": "bc9d13a6-3e8f-4e06-a615-62c4465c3a92",
+      "credentials": {
+        "telegramApi": {
+          "id": "YuDw1EqfAdNyQU2J",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "1744563539",
+        "message": "={{ $json.output }}",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1744,
+        -112
+      ],
+      "id": "88d43da0-9492-4f17-8ac6-ef152d230075",
+      "name": "Send a text message1",
+      "webhookId": "92a663d3-01e4-44dc-bf0f-8a74e056c079",
+      "credentials": {
+        "telegramApi": {
+          "id": "YuDw1EqfAdNyQU2J",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "414f68ae-b3a3-4474-9ec8-7724eed15e15",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1936,
+        -112
+      ],
+      "id": "2bfb6638-53f4-403f-89a7-86e661fe734b",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "chatId": "1744563539",
+        "text": "=what changes do you want please give me suggestions for better result ",
+        "replyMarkup": "inlineKeyboard",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        464,
+        432
+      ],
+      "id": "6de42792-d062-4c19-83bd-c0c5f82aa0be",
+      "name": "Send a text message2",
+      "webhookId": "bc9d13a6-3e8f-4e06-a615-62c4465c3a92",
+      "credentials": {
+        "telegramApi": {
+          "id": "YuDw1EqfAdNyQU2J",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "1744563539",
+        "message": "tell me chages",
+        "responseType": "freeText",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        880,
+        432
+      ],
+      "id": "3f2daf8b-49b3-464c-874e-79ef9278727b",
+      "name": "Send message and wait for response",
+      "webhookId": "59647f24-2f5e-4250-add0-a57395e4205d",
+      "credentials": {
+        "telegramApi": {
+          "id": "YuDw1EqfAdNyQU2J",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f1538e30-38b7-4482-b243-0023275337d1",
+              "name": "message.text",
+              "value": "={{ $('euri hit').item.json.choices[0].message.content }}\nThe above mail have some chages , these chages are given below {{ $json.data.text }}. Make the given changes and rewite the mail properly.",
+              "type": "string"
+            },
+            {
+              "id": "bf74b0cb-4698-439b-9d2e-45b79f1952a0",
+              "name": "choices[0].message.content",
+              "value": "=",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1072,
+        432
+      ],
+      "id": "fce76ac8-195f-44f7-930f-93f9fa3ff4f9",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -192,
+        384
+      ],
+      "id": "2e993833-2aa3-4969-829c-cf35f4b2abf1",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "1744563539",
+        "message": "={{ $json.choices[0].message.content }}",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1664,
+        432
+      ],
+      "id": "fb3ec6d6-7242-4c99-abb1-889e4142214d",
+      "name": "Send a text message3",
+      "webhookId": "92a663d3-01e4-44dc-bf0f-8a74e056c079",
+      "credentials": {
+        "telegramApi": {
+          "id": "YuDw1EqfAdNyQU2J",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "414f68ae-b3a3-4474-9ec8-7724eed15e15",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1872,
+        432
+      ],
+      "id": "196b8736-1255-4429-a5d7-4544ec0bfa87",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "sendTo": "shreyasmendhekar7@gmail.com",
+        "subject": "test mail 1",
+        "message": "={{ $('Edit Fields2').item.json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2352,
+        -48
+      ],
+      "id": "02cb4630-b963-495e-8677-6d7114c3b0b1",
+      "name": "Send a message",
+      "webhookId": "feb57353-255d-4158-8238-56ca2618bf64",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "3Cfd05Tw6d1dnBbX",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1mIOWLmw_KG1dMD5sFHkFJrzGOWtLNma5",
+          "mode": "list",
+          "cachedResultName": "Shreyas_Mendhekar_Resume_ML.pdf",
+          "cachedResultUrl": "https://drive.google.com/file/d/1mIOWLmw_KG1dMD5sFHkFJrzGOWtLNma5/view?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        272,
+        -384
+      ],
+      "id": "06f6b85e-624c-4b84-8e70-49db49c45cc2",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "kuKEWHjKvhLkj9DA",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1152,
+        -64
+      ],
+      "id": "3325aa2a-ed17-40af-8e08-3598fe1e88fe",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "1LmwbFjaTSdZQqSU",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}\ni have attached the Resume followed by Job description ,\nso make  the mail for the Hr regarding by considering the Job description and Resume.\nMake sure that mail should be precise and formal.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        1312,
+        -256
+      ],
+      "id": "ae56b06f-b290-4d06-be39-e246efd6811c",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "80b2f0b0-93c5-4345-a464-4bc3d4e9c012",
+              "name": "output",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1664,
+        -304
+      ],
+      "id": "07f8ac24-6a45-433f-b358-1e0a6cc3d100",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1296,
+        512
+      ],
+      "id": "296be388-65c9-492b-906c-19894adda99e",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "1LmwbFjaTSdZQqSU",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Make it in 5 lines summary of the resume  {{ $json.text }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        1296,
+        336
+      ],
+      "id": "d83d81f5-4e50-470b-9b32-bb37520f4015",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        48
+      ],
+      "id": "bb26c6b9-a65b-4ab5-a18d-062e2e078af1",
+      "name": "Send a text message4",
+      "webhookId": "4b0ac323-168f-4102-9617-f72895b9fe47",
+      "credentials": {
+        "telegramApi": {
+          "id": "pAOG9qaxL6b6uTSf",
+          "name": "Telegram account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.document.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        288,
+        -112
+      ],
+      "id": "fcf17ad6-da70-463a-a49e-4959b0a4127c",
+      "name": "Get a file",
+      "webhookId": "558f3c8a-e169-43d8-bc74-491a52a11de7",
+      "credentials": {
+        "telegramApi": {
+          "id": "YuDw1EqfAdNyQU2J",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d96295ba-0d36-4490-a996-e72a579ae6e7",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        784,
+        -352
+      ],
+      "id": "9e2402d0-cec5-48c3-a8d2-9b524c7ca2dd",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        544,
+        -384
+      ],
+      "id": "c2583043-6cc0-47c7-93ea-08ac12ee098e",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        544,
+        -128
+      ],
+      "id": "10f85f79-a905-4473-8cb4-0875d4575063",
+      "name": "Extract from File1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d96295ba-0d36-4490-a996-e72a579ae6e7",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "1a60ff8c-d287-40bb-b9ae-8fadcf76353b",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        752,
+        -112
+      ],
+      "id": "cc97b57f-26ea-4667-84aa-b541abd1e009",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        976,
+        -240
+      ],
+      "id": "cf42512e-1adf-45b6-b75e-1a743585505d",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "// items[0].json and items[1].json contain your input text objects\n\nconst mergedText = items\n    .map(item => item.json.text || \"\")\n    .join(\"\\n\\n\");   // merges with two new lines\n\nreturn [\n  {\n    json: {\n      text: mergedText\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1136,
+        -256
+      ],
+      "id": "04641e55-44c6-4604-9c46-7b4a7ebf8310",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get a file",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message2": {
+      "main": [
+        [
+          {
+            "node": "Send message and wait for response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message and wait for response": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Send a text message2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message3": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a903ee31-a185-4723-8d4f-f5682be70c7d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9e4bdfc7ccd13f981fbb80d5d966778790f64379e2ce745ed8c4e3e57a02254d"
+  },
+  "id": "peKBhM0WfVI7H9mi",
+  "tags": []
+}
