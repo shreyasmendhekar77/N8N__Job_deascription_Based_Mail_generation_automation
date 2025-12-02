@@ -58,4 +58,5 @@ Feedback loop for improvements
 One-click approval and sending
 
 
+<img width="1219" height="467" alt="Screenshot 2025-12-02 220457" src="https://github.com/user-attachments/assets/a81940f6-3168-44ee-9770-bb79db317119" />
 
